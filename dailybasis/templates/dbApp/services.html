@@ -1,0 +1,87 @@
+
+
+{% extends "dbApp/base.html" %}
+
+
+
+{% load static %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+    <div class="container py-5">
+  <h1 class="text-center mb-5">Pricing</h1>
+  <p class="text-center text-muted mb-5">
+    Quickly build an effective pricing table for your customers with this example. 
+    It's built with Bootstrap cards and utilities with little customization.
+  </p>
+
+  <div class="row text-center">
+    
+    <!-- Free Plan -->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 fw-normal">Free</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>10 per delivery</li>
+            <li>2 times</li>
+            <li>basics</li>
+            <li>Help center access</li>
+          </ul>
+          <a href="#" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 fw-normal">Pro</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$25 <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>50 deliverys</li>
+            <li>whole week delivery</li>
+            <li>Priority email support</li>
+            <li>Help center access</li>
+            <li>cancellation available</li>
+
+          </ul>
+          <a href="#" class="w-100 btn btn-lg btn-primary">Get started</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Plan -->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 fw-normal">Enterprise</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$50 <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>100 deliverys</li>
+            <li>whole week delivery</li>
+            <li>Priority email support</li>
+            <li>Help center access</li>
+            <li>cancellation available</li>
+            <li>return the products next day if any query abou that </li>
+          </ul>
+          <a href="#" class="w-100 btn btn-lg btn-primary">recommended</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    
+    <a href="{% url 'index' %}">Continue Shopping</a>
+    <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+{% endblock %}
+

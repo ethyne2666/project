@@ -1,0 +1,23 @@
+{% extends "dbApp/base.html" %}
+
+
+
+{% load static %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+    <h1>Your Cart</h1>
+    <p>This is where you can view items in your cart.</p>
+    
+    <!-- Add your cart items here -->
+    <ul>
+        <li>Item 1 - $10.00</li>
+        <li>Item 2 - $15.00</li>
+        <li>Item 3 - $20.00</li>
+    </ul>
+
+    <p>Total: $45.00</p>
+    
+    <a href="{% url 'index' %}">Continue Shopping</a>
+    <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+{% endblock %}
+

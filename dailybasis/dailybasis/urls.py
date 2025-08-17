@@ -17,8 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+admin.site.site_header = "Daily Basis Admin"
+admin.site.site_title = "Daily Basis Admin Portal"
+admin.site.index_title = "Welcome to Daily Basis Admin Portal"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dbApp.urls')),
+    path('contact/', include('dbApp.urls')),
+    path('aboutus/', include('dbApp.urls')),
+    path('myProfile/', include('dbApp.urls')),
+    path('header/', include('dbApp.urls')),
+    path('cart/', include('dbApp.urls')),
+    path('login/', include('dbApp.urls')),
+    path('signup/', include('dbApp.urls')),
+    path('checkout/', include('dbApp.urls')),
+    path('services/', include('dbApp.urls')),
+    path('logoutUser/', include('dbApp.urls')),
 
 ]

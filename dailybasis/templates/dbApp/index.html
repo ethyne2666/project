@@ -1,16 +1,15 @@
+
+
+
+{% extends "dbApp/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+{% block title %}Daily basis{% endblock %}
 
-<body>
+{% block content %}
+    <div id="weather-widget">
+        <p class="loading-message">Fetching weather data...</p>
+    </div>
 
-    <h1>Welcome to My Site</h1>
-    <a href="{%url 'product_list' %}">View products</a>
-    
-</body>
+    <script src="{% static 'js/weather.js' %}"></script>
+{% endblock %}
 
-</html>
