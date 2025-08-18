@@ -1,15 +1,104 @@
+{% extends "dbApp/base.html"%}
 
-
-
-{% extends "dbApp/base.html" %}
 {% load static %}
-{% block title %}Daily basis{% endblock %}
+{% block title %} Daily basis{% endblock %}
 
 {% block content %}
-    <div id="weather-widget">
-        <p class="loading-message">Fetching weather data...</p>
+<div class="product-grid">
+
+    <div class="product-card">
+        <div class="product-image-container">
+            <img src="{% static 'images/eggs.jpg' %}" alt="Fresh Bananas" class="product-image">
+        </div>
+        <div class="product-info-container">
+            <h3 class="product-title">Fresh Bananas</h3>
+            <span class="product-category">Fruits</span>
+            <div class="product-price-and-action">
+                <div class="price-stock">
+                    <span class="product-price">₹2.99</span>
+                    <span class="stock-status">In Stock</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image-container">
+            <img src="{% static 'images/rice.jpg' %}" alt="Red Apples" class="product-image">
+        </div>
+        <div class="product-info-container">
+            <h3 class="product-title">Red Apples</h3>
+            <span class="product-category">Fruits</span>
+            <div class="product-price-and-action">
+                <div class="price-stock">
+                    <span class="product-price">₹4.50</span>
+                    <span class="stock-status">In Stock</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <script src="{% static 'js/weather.js' %}"></script>
-{% endblock %}
+    <div class="product-card">
+        <div class="product-image-container">
+            <img src="{% static 'images/milk.jpg' %}" alt="Fresh Milk" class="product-image">
+        </div>
+        <div class="product-info-container">
+            <h3 class="product-title">Fresh Milk</h3>
+            <span class="product-category">Dairy</span>
+            <div class="product-price-and-action">
+                <div class="price-stock">
+                    <span class="product-price">₹3.25</span>
+                    <span class="stock-status">In Stock</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <div class="product-card">
+        <div class="product-image-container">
+            <img src="{% static 'images/tomatoes.jpg' %}" alt="tomatoes" class="product-image">
+        </div>
+        <div class="product-info-container">
+            <h3 class="product-title">Artisan Bread</h3>
+            <span class="product-category">Bakery</span>
+            <div class="product-price-and-action">
+                <div class="price-stock">
+                    <span class="product-price">₹5.99</span>
+                    <span class="stock-status">In Stock</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <div class="product-image-container">
+            <img src="{% static 'images/eggs.jpg' %}" alt="Farm Fresh Eggs" class="product-image">
+        </div>
+        <div class="product-info-container">
+            <h3 class="product-title">Farm Fresh Eggs</h3>
+            <span class="product-category">Dairy</span>
+            <div class="product-price-and-action">
+                <div class="price-stock">
+                    <span class="product-price">₹4.25</span>
+                    <span class="stock-status">In Stock</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

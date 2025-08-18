@@ -33,6 +33,8 @@ urlpatterns = [
     path('signup/', include('dbApp.urls')),
     path('checkout/', include('dbApp.urls')),
     path('services/', include('dbApp.urls')),
-    path('logoutUser/', include('dbApp.urls')),
+    path('logout/', include('dbApp.urls')),
+    path('dashboard/', include('dbApp.urls')),
+    path('product_detail/', include('dbApp.urls')),
 
 ]

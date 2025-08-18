@@ -17,26 +17,29 @@
         <h2>Signin to Daily Basis</h2>
 
         <!-- Login Form -->
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST" action="{% url 'signup' %}">
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">User Name</label>
-                <input type="text" id="name" name="email" required placeholder="Enter your name">
+                <input type="text" id="username" name="username" required placeholder="Enter your name">
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required placeholder="Enter your email">
             </div>
-            
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" required placeholder="Enter your phone number">
+            </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required placeholder="Enter your password">
             </div>
             <div class="form-group">
-                <label for="password"> confirm Password</label>
-                <input type="password" id="password" name="password" required placeholder="Confirm your password">
+                <label for="confirm_password"> confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password">
             </div>
 
             <button type="submit" class="btn-login">Signin</button>
@@ -44,8 +47,8 @@
 
         <!-- Extra Options -->
         <p class="signup-text">
-            New user?
-            <a href="{% url 'login' %}">Go Back</a>
+            Already have an account?
+            <a href="{% url 'login' %}">Login here</a>
         </p>
     </div>
 </div>

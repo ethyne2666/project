@@ -12,3 +12,11 @@ class Contact(models.Model):
 def __str__(self):
         return self.name
      
+class UserData(models.Model):
+    username = models.CharField(max_length=122, unique=True)
+    email = models.EmailField(max_length=122, unique=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    password = models.CharField(max_length=255)  # will store hashed password
+
+    def __str__(self):
+        return self.username

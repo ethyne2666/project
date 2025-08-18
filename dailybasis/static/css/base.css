@@ -376,3 +376,23 @@ footer {
   object-fit: cover;     
 }
 
+
+
+
+
+/* this is for the alret message*/
+
+.message-container {
+  position: fixed;  /* stick to very top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5000; /* above navbar */
+}
+
+.message-container .alert {
+  border-radius: 0;       /* flat stripe */
+  margin: 0;              /* remove gaps */
+  text-align: center;     /* center text */
+  font-weight: 500;
+}
