@@ -7,9 +7,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import UserData
+from .models import UserData,Product
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
+
 
 
 
@@ -154,3 +155,11 @@ def product_detail(request, product_id):
     return render(request, 'dbApp/product_detail.html', context)
 
 
+def details_page(request, product_id):
+    # This fetches the product from the database or returns a 404 error if not found
+    product = get_object_or_404(Product, pk=product_id)
+
+    context = {
+        'product': product,
+    }
+    return render(request, 'dbApp/details_page.html', context)

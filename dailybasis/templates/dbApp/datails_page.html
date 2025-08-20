@@ -1,0 +1,78 @@
+
+{% extends "dbApp/base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Daily Basis{% endblock %}
+
+{% block content %}
+<div class="product-detail-page">
+    <div class="product-detail-container">
+        <div class="product-detail-image-box">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
+        </div>
+        <div class="product-detail-info-box">
+            <h1 class="product-detail-name">{{ product.name }}</h1>
+            <p class="product-detail-category">{{ product.category }}</p>
+            <p class="product-detail-price">₹{{ product.price }}</p>
+            <p class="product-detail-description">{{ product.description }}</p>
+
+            <div class="quantity-control-detail">
+                <button class="btn-quantity-detail minus-btn" data-product-id="{{ product.id }}">-</button>
+                <span class="quantity-display" id="qty-{{ product.id }}">1</span>
+                <button class="btn-quantity-detail plus-btn" data-product-id="{{ product.id }}">+</button>
+            </div>
+            <button class="btn-add-to-cart-detail" data-product-id="{{ product.id }}" data-price="{{ product.price }}">Add to Cart</button>
+            
+            <p class="stock-status-detail">
+                {% if product.stock > 0 %}
+                    In Stock ({{ product.stock }} available)
+                {% else %}
+                    Out of Stock
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityDisplays = document.querySelectorAll('.quantity-display');
+        const minusBtns = document.querySelectorAll('.minus-btn');
+        const plusBtns = document.querySelectorAll('.plus-btn');
+        const addToCartBtns = document.querySelectorAll('.btn-add-to-cart-detail');
+
+        minusBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.productId;
+                const quantityElement = document.getElementById(`qty-${productId}`);
+                let currentQty = parseInt(quantityElement.textContent);
+                if (currentQty > 1) {
+                    quantityElement.textContent = currentQty - 1;
+                }
+            });
+        });
+
+        plusBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.productId;
+                const quantityElement = document.getElementById(`qty-${productId}`);
+                let currentQty = parseInt(quantityElement.textContent);
+                // You might want to add a check for max stock here
+                quantityElement.textContent = currentQty + 1;
+            });
+        });
+
+        addToCartBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.productId;
+                const price = parseFloat(this.dataset.price);
+                const quantity = parseInt(document.getElementById(`qty-${productId}`).textContent);
+                // Here you would implement your actual add to cart logic,
+                // perhaps by sending an AJAX request to a Django view
+                console.log(`Added Product ID: ${productId}, Quantity: ${quantity}, Total Price: ${price * quantity} to cart`);
+                alert(`Added ${quantity} of product ${productId} to cart! (This is a placeholder message)`);
+            });
+        });
+    });
+</script>
+{% endblock %}

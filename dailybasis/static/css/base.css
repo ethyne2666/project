@@ -396,3 +396,76 @@ footer {
   text-align: center;     /* center text */
   font-weight: 500;
 }
+
+
+
+/* this is for the product card styles */
+
+/* Add to your existing products.css file */
+
+/* Make the whole card a clickable link */
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Add a hover effect to the link itself */
+.product-link:hover .product-card {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Styles for the "View Product" button */
+.btn-view-product {
+    background-color: #4CAF50; /* Green theme color */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    width: 90%;
+    margin: 10px auto;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-view-product:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+}
+
+/* Ensure the button and other content don't move the whole card on hover */
+.product-card {
+    /* Existing styles, just ensure it's a relative position container */
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: none; /* Disable transform here, as it's on the parent link */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure all cards have the same height */
+}
+
+/* Ensure a consistent height for the info container for alignment */
+.product-info-container {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows this section to fill available space */
+}
+
+/* The add-to-cart button needs to be clickable and not part of the link */
+.add-to-cart-btn {
+    pointer-events: auto; /* Makes the button clickable inside the link */
+}
+
+.product-price-and-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
