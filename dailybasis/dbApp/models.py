@@ -9,8 +9,8 @@ class Contact(models.Model):
     desc = models.TextField(max_length=500) 
     date = models.DateField(blank=True,null=True)
 
-def __str__(self):
-        return self.name
+    def __str__(self):
+            return self.name
      
 class UserData(models.Model):
     username = models.CharField(max_length=122, unique=True)
@@ -18,5 +18,6 @@ class UserData(models.Model):
     phone = models.CharField(max_length=15, blank=True, null=True)
     password = models.CharField(max_length=255)  # will store hashed password
 
+
     def __str__(self):
-        return self.username
+            return self.username

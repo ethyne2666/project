@@ -129,3 +129,8 @@ body {
 .add-to-cart-btn i {
     pointer-events: none;
 }
+
+.map{
+    justify-content: center;
+    align-content: center;
+}
