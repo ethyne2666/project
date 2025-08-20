@@ -134,3 +134,66 @@
         padding: 40px;
     }
 }
+
+
+
+
+
+/* Additional styles for the contact page */
+/* Contact Info Section */
+
+
+/* Contact Info Section */
+.contact-info-section {
+    margin: 50px auto;
+    text-align: center;
+    max-width: 1000px;
+}
+
+.contact-info-section h2 {
+    font-size: 2em;
+    color: #2e7d32;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.contact-info-card {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-info-card .icon {
+    font-size: 2.5em;
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+.contact-info-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    color: #388e3c;
+}
+
+.contact-info-card p,
+.contact-info-card small {
+    margin: 3px 0;
+    font-size: 1em;
+    color: #333;
+}

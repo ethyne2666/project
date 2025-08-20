@@ -8,6 +8,59 @@
     <p class="loading-message">Fetching weather data...</p>
 </div>
 
+
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <img src="{% static 'images/daily-basis.jpg' %}" alt="Daily Basis" class="hero-logo">
+        <h1><span class="bold">Fresh Groceries</span> <span class="highlight">Daily</span></h1>
+        <p>Get the freshest produce, dairy, and essentials delivered to your doorstep.<br>
+           Quality you can trust, convenience you deserve.</p>
+        <button class="shop-btn" onclick="scrollToProducts()">Shop Now →</button>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-leaf"></i></i>
+        <h3>Fresh & Organic</h3>
+        <p>Locally sourced organic produce</p>
+    </div>
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-truck-fast"></i></i>
+        <h3>Fast Delivery</h3>
+        <p>Same-day delivery available</p>
+    </div>
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-clock"></i></i>
+        <h3>Always Fresh</h3>
+        <p>Daily replenished inventory</p>
+    </div>
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-calendar-check"></i></i>
+        <h3>Quality Assured</h3>
+        <p>100% satisfaction guarantee</p>
+    </div>
+</section>
+
+
+<!-- Scroll Script -->
+<script>
+    function scrollToProducts() {
+        document.getElementById("product-section").scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+
+
+<div id="product-section" class="product-section">
+    <h2>Featured Products</h2>
+    <p>Explore our handpicked selection of fresh groceries.</p>
+
+
+
 <div class="product-grid">
 
     <a href="{% url 'details_page' product_id=1 %}" class="product-link">
