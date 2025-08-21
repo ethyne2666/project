@@ -11,6 +11,9 @@ from .models import UserData,Product ,ProductImage
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from django.db.models import Q # Import Q object for complex queries
+from django.http import JsonResponse
+import json
+
 
 
 
@@ -152,10 +155,27 @@ def product_detail(request, product_id):
 
 
 def index(request):
-    # Fetch all products from the database and pass them to the template
     products = Product.objects.all()
+    categories = Product.objects.values_list('category', flat=True).distinct()
+
+    selected_category = request.GET.get('category')
+    sort_option = request.GET.get('sort')
+
+    # Filter by category
+    if selected_category:
+        products = products.filter(category=selected_category)
+
+    # Sort by price
+    if sort_option == 'price_asc':
+        products = products.order_by('price')
+    elif sort_option == 'price_desc':
+        products = products.order_by('-price')
+
     context = {
-        'products': products
+        'products': products,
+        'categories': categories,
+        'selected_category': selected_category,
+        'sort': sort_option
     }
     return render(request, 'dbApp/index.html', context)
 
@@ -170,11 +190,6 @@ def details_page(request, product_id):
         'related_products': related_products,
     }
     return render(request, 'dbApp/details_page.html', context)
-
-# All your other views (contact, login, signup, etc.) are fine as they are.
-# I will not change them based on your request.
-def cart_view(request):
-    return render(request, 'dbApp/cart.html')
 
 
 def search_results(request):
@@ -192,3 +207,73 @@ def search_results(request):
         'query': query
     }
     return render(request, 'dbApp/search_results.html', context)
+
+
+
+
+
+# releated to cart
+
+
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            product_id = data.get('product_id')
+            quantity = data.get('quantity', 1)
+            
+            product = get_object_or_404(Product, id=product_id)
+            
+            cart = request.session.get('cart', {})
+            
+            # Update quantity if product is already in cart
+            if str(product_id) in cart:
+                cart[str(product_id)]['quantity'] += quantity
+            else:
+                cart[str(product_id)] = {
+                    'name': product.name,
+                    'price': str(product.price), # Convert Decimal to string for JSON serialization
+                    'image': product.image.url if product.image else '',
+                    'quantity': quantity
+                }
+            
+            request.session['cart'] = cart
+            
+            # Return a JSON response for success
+            return JsonResponse({'success': True, 'message': f'"{product.name}" added to cart!', 'item_count': len(cart)})
+        
+        except (json.JSONDecodeError, Product.DoesNotExist) as e:
+            return JsonResponse({'success': False, 'message': 'Invalid request.'}, status=400)
+    
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=405)
+
+def cart_view(request):
+    cart = request.session.get('cart', {})
+    cart_items = []
+    subtotal = 0
+
+    for product_id, item_data in cart.items():
+        item_price = float(item_data['price'])
+        total_item_price = item_price * item_data['quantity']
+        subtotal += total_item_price
+        
+        cart_items.append({
+            'product_id': product_id,
+            'name': item_data['name'],
+            'image': item_data['image'],
+            'price': item_price,
+            'quantity': item_data['quantity'],
+            'total_price': total_item_price
+        })
+
+    delivery_fee = 4.99
+    total = subtotal + delivery_fee
+
+    context = {
+        'cart_items': cart_items,
+        'subtotal': subtotal,
+        'delivery_fee': delivery_fee,
+        'total': total
+    }
+    return render(request, 'dbApp/cart.html', context)

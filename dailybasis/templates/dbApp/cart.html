@@ -1,23 +1,95 @@
 {% extends "dbApp/base.html" %}
-
-
-
 {% load static %}
-{% block title %}Cart{% endblock %}
+
+{% block title %}Shopping Cart{% endblock %}
+
 {% block content %}
-    <h1>Your Cart</h1>
-    <p>This is where you can view items in your cart.</p>
-    
-    <!-- Add your cart items here -->
-    <ul>
-        <li>Item 1 - $10.00</li>
-        <li>Item 2 - $15.00</li>
-        <li>Item 3 - $20.00</li>
-    </ul>
+<div class="cart-page-container">
+    <div class="shopping-cart-section">
+        <h2 class="cart-title">Shopping Cart</h2>
+        {% if cart_items %}
+            <div class="cart-items-list">
+                {% for item in cart_items %}
+                <div class="cart-item" data-product-id="{{ item.product_id }}">
+                    <img src="{{ item.image }}" alt="{{ item.name }}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <span class="cart-item-name">{{ item.name }}</span>
+                        <span class="cart-item-price">₹{{ item.price }}</span>
+                    </div>
+                    <div class="cart-item-quantity-control">
+                        <button class="btn-cart-quantity minus-btn">-</button>
+                        <span class="quantity-display" data-product-id="{{ item.product_id }}">{{ item.quantity }}</span>
+                        <button class="btn-cart-quantity plus-btn">+</button>
+                    </div>
+                    <span class="cart-item-total-price">₹{{ item.total_price|floatformat:2 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-cart-message">Your cart is empty.</p>
+        {% endif %}
+    </div>
 
-    <p>Total: $45.00</p>
-    
-    <a href="{% url 'index' %}">Continue Shopping</a>
-    <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    <div class="order-summary-section">
+        <h2 class="summary-title">Order Summary</h2>
+        <div class="summary-line">
+            <span>Subtotal</span>
+            <span id="subtotal-price">₹{{ subtotal|floatformat:2 }}</span>
+        </div>
+        <div class="summary-line">
+            <span>Delivery Fee</span>
+            <span id="delivery-price">₹{{ delivery_fee|floatformat:2 }}</span>
+        </div>
+        <hr>
+        <div class="summary-line total">
+            <span>Total</span>
+            <span id="total-price">₹{{ total|floatformat:2 }}</span>
+        </div>
+        <button class="btn-checkout">Proceed to Checkout</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartItemsList = document.querySelector('.cart-items-list');
+        const subtotalPriceElement = document.getElementById('subtotal-price');
+        const totalPriceElement = document.getElementById('total-price');
+        const deliveryFee = parseFloat(document.getElementById('delivery-price').textContent.replace('₹', ''));
+
+        cartItemsList.addEventListener('click', function(e) {
+            const target = e.target;
+            let currentQuantityElement;
+            let currentQuantity;
+
+            if (target.classList.contains('plus-btn') || target.classList.contains('minus-btn')) {
+                currentQuantityElement = target.parentElement.querySelector('.quantity-display');
+                currentQuantity = parseInt(currentQuantityElement.textContent);
+            }
+
+            if (target.classList.contains('plus-btn')) {
+                currentQuantity++;
+                currentQuantityElement.textContent = currentQuantity;
+            } else if (target.classList.contains('minus-btn')) {
+                if (currentQuantity > 1) {
+                    currentQuantity--;
+                    currentQuantityElement.textContent = currentQuantity;
+                }
+            }
+            updateSummary();
+        });
+
+        function updateSummary() {
+            let subtotal = 0;
+            document.querySelectorAll('.cart-item').forEach(item => {
+                const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('₹', ''));
+                const quantity = parseInt(item.querySelector('.quantity-display').textContent);
+                subtotal += price * quantity;
+                item.querySelector('.cart-item-total-price').textContent = `₹${(price * quantity).toFixed(2)}`;
+            });
+
+            subtotalPriceElement.textContent = `₹${subtotal.toFixed(2)}`;
+            totalPriceElement.textContent = `₹${(subtotal + deliveryFee).toFixed(2)}`;
+        }
+    });
+</script>
 {% endblock %}
-

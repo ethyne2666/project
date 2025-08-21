@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/aboutus.css' %}">
     <link rel="stylesheet" href="{% static 'css/search_results.css' %}">
     <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 
     
 
@@ -87,7 +88,7 @@
             <button type="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </form>
-    <a href="{% url 'cart' %}" class="icon-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="{% url 'cart_view' %}" class="icon-link"><i class="fas fa-shopping-cart"></i> Cart</a>
     <a href="{% url 'myProfile' %}" class="icon-link"><i class="fa-solid fa-user"></i> MyProfile</a>
 </div>
 

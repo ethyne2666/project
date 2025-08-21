@@ -10,7 +10,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
     path('index/', views.index, name='index'),    
-    path('cart/', views.cart_view, name='cart'),
     path('contact/', views.contact, name='contact'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('myProfile/', views.myProfile, name='myProfile'),
@@ -21,6 +20,8 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("logout/", views.logoutUser, name="logout"),
     path("search_results/", views.search_results, name="search_results"),
+    path('add_to_cart/', views.add_to_cart, name='add_to_cart'),
+    path('cart/', views.cart_view, name='cart_view'),
 
     # Corrected and simplified product detail page URL
     path('product/<int:product_id>/', views.details_page, name='details_page'),
