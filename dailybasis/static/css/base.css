@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 50vh;
-    background-color: #fff;
+    background-color: #1ce829;
     color: var(--text-color);
 }
 
@@ -148,7 +148,7 @@ main {
 }
 /* Footer Styles */
 .footer {
-    background-color: #f8f9fa; /* Light gray background */
+    background-color: #ffffff; /* Light gray background */
     color: #333;
     padding: 40px 20px 20px;
     font-family: Arial, sans-serif;

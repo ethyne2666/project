@@ -9,8 +9,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
-    path('index/', views.index, name='index'),    
-    path('cart/', views.cart_view, name='cart'),
+    path('index/', views.index, name='index'),
+    path("cart/", views.cart_view, name="cart"),
+    path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path("cart/remove/<int:item_id>/", views.remove_from_cart, name="remove_from_cart"),
+    path("cart/update/<int:item_id>/", views.update_quantity, name="update_quantity"),
     path('contact/', views.contact, name='contact'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('myProfile/', views.myProfile, name='myProfile'),

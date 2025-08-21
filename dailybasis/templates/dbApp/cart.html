@@ -1,23 +1,75 @@
 {% extends "dbApp/base.html" %}
-
-
-
-{% load static %}
-{% block title %}Cart{% endblock %}
 {% block content %}
-    <h1>Your Cart</h1>
-    <p>This is where you can view items in your cart.</p>
-    
-    <!-- Add your cart items here -->
-    <ul>
-        <li>Item 1 - $10.00</li>
-        <li>Item 2 - $15.00</li>
-        <li>Item 3 - $20.00</li>
-    </ul>
+<div class="container my-5">
+    <h2 class="mb-4">Your Cart</h2>
 
-    <p>Total: $45.00</p>
-    
-    <a href="{% url 'index' %}">Continue Shopping</a>
-    <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    {% if cart.items.all %}
+    <div class="row">
+        <!-- Cart Items Table -->
+        <div class="col-lg-8">
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Product</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart.items.all %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" width="70" class="img-fluid rounded">
+                                {% endif %}
+                            </td>
+                            <td>₹{{ item.product.price }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'update_quantity' item.id %}" class="d-flex">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control w-50 me-2">
+                                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                </form>
+                            </td>
+                            <td>₹{{ item.subtotal }}</td>
+                            <td>
+                                <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">
+                                    Remove
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm p-3 sticky-top" style="top: 80px;">
+                <h4 class="mb-3">Order Summary</h4>
+                <p class="d-flex justify-content-between">
+                    <span>Total Items</span> 
+                    <span>{{ cart.items.count }}</span>
+                </p>
+                <p class="d-flex justify-content-between fw-bold">
+                    <span>Total Price</span> 
+                    <span>₹{{ cart.total_price }}</span>
+                </p>
+                <a href="#" class="btn btn-success w-100">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <div class="text-center py-5">
+            <h4 class="text-muted">Your cart is empty.</h4>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
-

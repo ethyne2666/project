@@ -35,12 +35,22 @@
             </div>
 
             <div class="product-detail-actions">
-                <div class="quantity-selector">
-                    <button class="quantity-btn minus-btn">-</button>
-                    <span class="quantity-display">1</span>
-                    <button class="quantity-btn plus-btn">+</button>
-                </div>
-                <button class="add-to-cart-detail-btn">Add to Cart</button>
+               <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                    {% csrf_token %}
+
+                   <button type="submit" name="action" value="decrease" class="btn btn-outline-secondary">−</button>
+
+                   <input type="number" 
+                    name="quantity" 
+                    value="{{ quantity|default:1 }}" 
+                    min="1" 
+                    max="{{ product.stock }}" 
+                    readonly
+                    class="form-control d-inline-block w-25 text-center">
+
+                   <button type="submit" name="action" value="increase" class="btn btn-outline-secondary">+</button>
+                   <button type="submit" name="action" value="add" class="btn btn-primary">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>

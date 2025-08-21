@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import UserData,Product ,ProductImage
+from .models import UserData,Product,ProductImage,Cart,CartItem
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from django.db.models import Q # Import Q object for complex queries
@@ -102,6 +102,79 @@ def myProfile(request):
     user = UserData.objects.get(id=user_id)
     return render(request, 'dbApp/myProfile.html', {'user': user})
 
+@login_required
+def cart_view(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    return render(request, "cart/cart.html", {"cart": cart})
+
+@login_required
+def add_to_cart(request, product_id):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+    product = get_object_or_404(Product, id=product_id)
+    item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    if not created:
+        item.quantity += 1
+        item.save()
+
+    return redirect("cart")
+
+# Add product to cart
+def add_to_cart(request, product_id):
+    user = UserData.objects.first()  # later replace with request.user
+    cart, created = Cart.objects.get_or_create(user=user)
+    product = get_object_or_404(Product, id=product_id)
+
+    # Default quantity
+    quantity = int(request.POST.get("quantity", 1))
+    action = request.POST.get("action")
+
+    # Adjust quantity depending on which button was pressed
+    if action == "increase":
+        quantity += 1
+    elif action == "decrease" and quantity > 1:
+        quantity -= 1
+    elif action == "add":
+        # Save to cart
+        item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+            item.quantity += quantity
+        else:
+            item.quantity = quantity
+        item.save()
+        return redirect("cart")
+
+    # If not adding, re-render the product page with updated quantity
+    return render(request, "dbApp/details_page.html", {
+        "product": product,
+        "quantity": quantity,
+    })
+
+
+#  Show cart
+def cart_view(request):
+    user = UserData.objects.first()  # 👈 TEMP
+    cart, created = Cart.objects.get_or_create(user=user)
+    return render(request, "dbApp/cart.html", {"cart": cart})
+
+#  Remove product from cart
+def remove_from_cart(request, item_id):
+    user = UserData.objects.first()  # 👈 TEMP
+    cart = get_object_or_404(Cart, user=user)
+    item = get_object_or_404(CartItem, id=item_id, cart=cart)
+    item.delete()
+    return redirect("cart")
+
+#  Update quantity
+def update_quantity(request, item_id):
+    if request.method == "POST":
+        user = UserData.objects.first()  # 👈 TEMP
+        cart = get_object_or_404(Cart, user=user)
+        item = get_object_or_404(CartItem, id=item_id, cart=cart)
+        quantity = int(request.POST.get("quantity", 1))
+        item.quantity = quantity
+        item.save()
+    return redirect("cart")
 
 def checkout(request):
     return render(request,'dbApp/checkout.html')
@@ -149,8 +222,6 @@ def product_detail(request, product_id):
     }
     return render(request, 'dbApp/product_detail.html', context)
 
-
-
 def index(request):
     # Fetch all products from the database and pass them to the template
     products = Product.objects.all()
@@ -173,9 +244,6 @@ def details_page(request, product_id):
 
 # All your other views (contact, login, signup, etc.) are fine as they are.
 # I will not change them based on your request.
-def cart_view(request):
-    return render(request, 'dbApp/cart.html')
-
 
 def search_results(request):
     query = request.GET.get('query')
