@@ -255,3 +255,66 @@ body {
 .cart-btn:hover {
     background: #256628;
 }
+
+
+
+
+
+
+
+
+/*this is faq section*/
+
+/* FAQ Section */
+.faq-section {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f9fafb;
+}
+
+.faq-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.faq-subtitle {
+    font-size: 1rem;
+    color: #6b7280; /* Gray */
+    margin-bottom: 40px;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.faq-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+.faq-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.faq-card p {
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.5;
+}

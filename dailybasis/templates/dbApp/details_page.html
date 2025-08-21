@@ -1,0 +1,104 @@
+{% extends "dbApp/base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} Details{% endblock %}
+
+{% block content %}
+<div class="product-detail-container">
+    <div class="product-detail-grid">
+        <div class="product-detail-images">
+            <div class="main-image-container">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-main-image">
+            </div>
+            <div class="thumbnails">
+                {% for img in product.images.all %}
+                    <img src="{{ img.image.url }}" alt="Thumbnail" class="thumbnail-image" onclick="changeMainImage(this)">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="product-detail-info">
+            <h1 class="product-detail-name">{{ product.name }}</h1>
+            <p class="product-detail-category">{{ product.category }}</p>
+            <p class="product-detail-price">₹{{ product.price }}</p>
+            
+            <div class="product-detail-description">
+                <h3>Product Description</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            
+            <div class="product-detail-stock">
+                {% if product.stock > 0 %}
+                    <span class="stock-status-detail in-stock">In Stock ({{ product.stock }})</span>
+                {% else %}
+                    <span class="stock-status-detail out-of-stock">Out of Stock</span>
+                {% endif %}
+            </div>
+
+            <div class="product-detail-actions">
+                <div class="quantity-selector">
+                    <button class="quantity-btn minus-btn">-</button>
+                    <span class="quantity-display">1</span>
+                    <button class="quantity-btn plus-btn">+</button>
+                </div>
+                <button class="add-to-cart-detail-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="related-products-section">
+        <h3>Related Products</h3>
+        <div class="product-grid">
+            {% for related_product in related_products %}
+                <a href="{% url 'details_page' product_id=related_product.id %}" class="product-link">
+                    <div class="product-card">
+                        {% if related_product.image %}
+                            <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}" class="product-image">
+                        {% else %}
+                            <img src="{% static 'images/placeholder_product.jpg' %}" alt="No Image" class="product-image">
+                        {% endif %}
+                        <div class="product-info-container">
+                            <h3 class="product-title">{{ related_product.name }}</h3>
+                            <span class="product-category">{{ related_product.category }}</span>
+                            <div class="product-price-and-action">
+                                <span class="product-price">₹{{ related_product.price }}</span>
+                                <button class="add-to-cart-btn"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <button class="btn-view-product">View Product</button>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript for main image change and quantity selection
+    function changeMainImage(thumbnail) {
+        const mainImage = document.querySelector('.product-detail-main-image');
+        mainImage.src = thumbnail.src;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Quantity selector logic
+        const plusBtn = document.querySelector('.plus-btn');
+        const minusBtn = document.querySelector('.minus-btn');
+        const quantityDisplay = document.querySelector('.quantity-display');
+
+        plusBtn.addEventListener('click', function() {
+            let currentQuantity = parseInt(quantityDisplay.textContent);
+            currentQuantity++;
+            quantityDisplay.textContent = currentQuantity;
+        });
+
+        minusBtn.addEventListener('click', function() {
+            let currentQuantity = parseInt(quantityDisplay.textContent);
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                quantityDisplay.textContent = currentQuantity;
+            }
+        });
+    });
+</script>
+
+{% endblock %}

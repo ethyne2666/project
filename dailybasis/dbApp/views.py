@@ -7,18 +7,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import UserData,Product
+from .models import UserData,Product ,ProductImage
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
+from django.db.models import Q # Import Q object for complex queries
 
 
 
-
-def index(request):
-    return render(request, 'dbApp/index.html')
-
-def cart_view(request):
-    return render(request, 'dbApp/cart.html')
 
 
 def aboutus(request):
@@ -155,11 +150,45 @@ def product_detail(request, product_id):
     return render(request, 'dbApp/product_detail.html', context)
 
 
+
+def index(request):
+    # Fetch all products from the database and pass them to the template
+    products = Product.objects.all()
+    context = {
+        'products': products
+    }
+    return render(request, 'dbApp/index.html', context)
+
 def details_page(request, product_id):
-    # This fetches the product from the database or returns a 404 error if not found
-    product = get_object_or_404(Product, pk=product_id)
+    product = get_object_or_404(Product.objects.prefetch_related('images'), pk=product_id)
+    
+    # Fetch related products from the same category
+    related_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:4]
 
     context = {
         'product': product,
+        'related_products': related_products,
     }
     return render(request, 'dbApp/details_page.html', context)
+
+# All your other views (contact, login, signup, etc.) are fine as they are.
+# I will not change them based on your request.
+def cart_view(request):
+    return render(request, 'dbApp/cart.html')
+
+
+def search_results(request):
+    query = request.GET.get('query')
+    products = Product.objects.all()
+
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query)
+        )
+    
+    context = {
+        'products': products,
+        'query': query
+    }
+    return render(request, 'dbApp/search_results.html', context)

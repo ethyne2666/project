@@ -36,5 +36,6 @@ urlpatterns = [
     path('logout/', include('dbApp.urls')),
     path('dashboard/', include('dbApp.urls')),
     path('product_detail/', include('dbApp.urls')),
+    path('search_results/', include('dbApp.urls')),
 
 ]

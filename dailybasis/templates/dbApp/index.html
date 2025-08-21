@@ -1,5 +1,4 @@
 {% extends "dbApp/base.html"%}
-
 {% load static %}
 {% block title %} Daily basis{% endblock %}
 
@@ -8,20 +7,16 @@
     <p class="loading-message">Fetching weather data...</p>
 </div>
 
-
-
-<!-- Hero Section -->
 <section class="hero">
     <div class="hero-content">
         <img src="{% static 'images/daily-basis.jpg' %}" alt="Daily Basis" class="hero-logo">
         <h1><span class="bold">Fresh Groceries</span> <span class="highlight">Daily</span></h1>
         <p>Get the freshest produce, dairy, and essentials delivered to your doorstep.<br>
-           Quality you can trust, convenience you deserve.</p>
+            Quality you can trust, convenience you deserve.</p>
         <button class="shop-btn" onclick="scrollToProducts()">Shop Now →</button>
     </div>
 </section>
 
-<!-- Features Section -->
 <section class="features">
     <div class="feature">
         <i class="icon"><i class="fa-solid fa-leaf"></i></i>
@@ -45,133 +40,51 @@
     </div>
 </section>
 
-
-<!-- Scroll Script -->
 <script>
     function scrollToProducts() {
         document.getElementById("product-section").scrollIntoView({ behavior: "smooth" });
     }
 </script>
 
-
-
 <div id="product-section" class="product-section">
     <h2>Featured Products</h2>
     <p>Explore our handpicked selection of fresh groceries.</p>
 
-
-
-<div class="product-grid">
-
-    <a href="{% url 'details_page' product_id=1 %}" class="product-link">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="{% static 'images/eggs.jpg' %}" alt="Fresh Bananas" class="product-image">
-            </div>
-            <div class="product-info-container">
-                <h3 class="product-title">Fresh Bananas</h3>
-                <span class="product-category">Fruits</span>
-                <div class="product-price-and-action">
-                    <div class="price-stock">
-                        <span class="product-price">₹2.99</span>
-                        <span class="stock-status">In Stock</span>
-                    </div>
-                    <button class="add-to-cart-btn">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
+    <div class="product-grid">
+        {% for product in products %}
+        <a href="{% url 'details_page' product_id=product.id %}" class="product-link">
+            <div class="product-card">
+                <div class="product-image-container">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                    {% else %}
+                        <img src="{% static 'images/placeholder_product.jpg' %}" alt="No Image" class="product-image">
+                    {% endif %}
                 </div>
-            </div>
-            <button class="btn-view-product">View Product</button>
-        </div>
-    </a>
-    <a href="{% url 'details_page' product_id=2 %}" class="product-link">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="{% static 'images/rice.jpg' %}" alt="Red Apples" class="product-image">
-            </div>
-            <div class="product-info-container">
-                <h3 class="product-title">Red Apples</h3>
-                <span class="product-category">Fruits</span>
-                <div class="product-price-and-action">
-                    <div class="price-stock">
-                        <span class="product-price">₹4.50</span>
-                        <span class="stock-status">In Stock</span>
+                <div class="product-info-container">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <span class="product-category">{{ product.category }}</span>
+                    <div class="product-price-and-action">
+                        <div class="price-stock">
+                            <span class="product-price">₹{{ product.price }}</span>
+                            <span class="stock-status">
+                                {% if product.stock > 0 %}
+                                    In Stock ({{ product.stock }})
+                                {% else %}
+                                    Out of Stock
+                                {% endif %}
+                            </span>
+                        </div>
+                        <button class="add-to-cart-btn">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </div>
-                    <button class="add-to-cart-btn">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
                 </div>
+                <button class="btn-view-product">View Product</button>
             </div>
-            <button class="btn-view-product">View Product</button>
-        </div>
-    </a>
-
-    <a href="{% url 'details_page' product_id=3 %}" class="product-link">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="{% static 'images/milk.jpg' %}" alt="Fresh Milk" class="product-image">
-            </div>
-            <div class="product-info-container">
-                <h3 class="product-title">Fresh Milk</h3>
-                <span class="product-category">Dairy</span>
-                <div class="product-price-and-action">
-                    <div class="price-stock">
-                        <span class="product-price">₹3.25</span>
-                        <span class="stock-status">In Stock</span>
-                    </div>
-                    <button class="add-to-cart-btn">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <button class="btn-view-product">View Product</button>
-        </div>
-    </a>
-
-    <a href="{% url 'details_page' product_id=4 %}" class="product-link">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="{% static 'images/tomatoes.jpg' %}" alt="tomatoes" class="product-image">
-            </div>
-            <div class="product-info-container">
-                <h3 class="product-title">Artisan Bread</h3>
-                <span class="product-category">Bakery</span>
-                <div class="product-price-and-action">
-                    <div class="price-stock">
-                        <span class="product-price">₹5.99</span>
-                        <span class="stock-status">In Stock</span>
-                    </div>
-                    <button class="add-to-cart-btn">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <button class="btn-view-product">View Product</button>
-        </div>
-    </a>
-
-    <a href="{% url 'details_page' product_id=5 %}" class="product-link">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img src="{% static 'images/eggs.jpg' %}" alt="Farm Fresh Eggs" class="product-image">
-            </div>
-            <div class="product-info-container">
-                <h3 class="product-title">Farm Fresh Eggs</h3>
-                <span class="product-category">Dairy</span>
-                <div class="product-price-and-action">
-                    <div class="price-stock">
-                        <span class="product-price">₹4.25</span>
-                        <span class="stock-status">In Stock</span>
-                    </div>
-                    <button class="add-to-cart-btn">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <button class="btn-view-product">View Product</button>
-        </div>
-    </a>
-
+        </a>
+        {% endfor %}
+    </div>
 </div>
 
 <script src="{% static 'js/weather.js' %}"></script>

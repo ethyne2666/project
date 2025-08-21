@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{% static 'css/myProfile.css' %}">
     <link rel="stylesheet" href="{% static 'css/services.css' %}">
     <link rel="stylesheet" href="{% static 'css/aboutus.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
 
     
 
@@ -78,18 +80,16 @@
   
         
 
-
-      <!-- Search + Icons -->
-      <div class="header-icons">
-          <div class="search-bar">
-              <input type="text" placeholder="Search products...">
-              <i class="fas fa-search"></i>
-          </div>
-          <a href="{% url 'cart' %}" class="icon-link"><i class="fas fa-shopping-cart"></i> Cart</a>
-          <a href="{% url 'myProfile' %}" class="icon-link"><i class="fa-solid fa-user"></i> MyProfile</a>
-      </div>
-  </div>
- 
+<div class="header-icons">
+    <form action="{% url 'search_results' %}" method="GET" class="search-form">
+        <div class="search-bar">
+            <input type="text" name="query" placeholder="Search products...">
+            <button type="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </form>
+    <a href="{% url 'cart' %}" class="icon-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="{% url 'myProfile' %}" class="icon-link"><i class="fa-solid fa-user"></i> MyProfile</a>
+</div>
 
 </header>
 <main>
