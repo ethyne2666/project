@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductImage, Contact, UserData # Make sure to import all your models
+from .models import Product, ProductImage, Contact, UserData, Address # Make sure to import all your models
 
 # Inline to add multiple images to a product
 class ProductImageInline(admin.TabularInline):
@@ -17,3 +17,4 @@ class ProductAdmin(admin.ModelAdmin):
 # Register your other models here
 admin.site.register(Contact)
 admin.site.register(UserData)
+admin.site.register(Address)
