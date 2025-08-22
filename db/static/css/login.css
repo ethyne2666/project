@@ -1,0 +1,85 @@
+
+/* Center container inside base layout */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 80px auto; /* pushes down below header */
+    padding: 15px;
+}
+
+/* Card */
+.login-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Logo */
+.login-card .logo img {
+    width: 100px;
+    margin-bottom: 15px;
+}
+
+/* Heading */
+.login-card h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #333;
+}
+
+/* Form fields */
+.login-card .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-card label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Button */
+.login-card .btn-login {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-card .btn-login:hover {
+    background: #0056b3;
+}
+
+/* Signup link */
+.login-card .signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-card .signup-text a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-card .signup-text a:hover {
+    text-decoration: underline;
+}

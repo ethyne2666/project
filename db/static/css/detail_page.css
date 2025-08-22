@@ -1,0 +1,127 @@
+
+
+/* Product Detail Page Styles */
+.product-detail-page {
+padding: 30px 0;
+background-color: #f8f9fa; /* Light grey background */
+}
+
+.product-detail-container {
+max-width: 1100px;
+margin: 0 auto;
+background-color: #fff;
+box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+border-radius: 10px;
+overflow: hidden;
+display: flex;
+padding: 30px;
+}
+
+.product-detail-image-box {
+flex: 0 0 40%;
+padding-right: 30px;
+border-right: 1px solid #eee;
+}
+
+.product-detail-image {
+width: 100%;
+height: auto;
+border-radius: 8px;
+object-fit: cover;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.product-detail-info-box {
+flex: 1;
+padding-left: 30px;
+display: flex;
+flex-direction: column;
+}
+
+.product-detail-name {
+font-size: 2.5em;
+color: #333;
+margin-bottom: 10px;
+}
+
+.product-detail-category {
+color: #777;
+font-size: 1.1em;
+margin-bottom: 20px;
+}
+
+.product-detail-price {
+color: #28a745; /* Green price */
+font-size: 2em;
+font-weight: bold;
+margin-bottom: 25px;
+}
+
+.product-detail-description {
+color: #555;
+line-height: 1.7;
+margin-bottom: 30px;
+}
+
+/* Quantity Control */
+.quantity-control-detail {
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+}
+
+.btn-quantity-detail {
+background-color: #f2f2f2;
+color: #555;
+border: 1px solid #ddd;
+padding: 8px 12px;
+font-size: 1em;
+cursor: pointer;
+border-radius: 5px;
+transition: background-color 0.3s ease;
+}
+
+.btn-quantity-detail:hover {
+background-color: #e0e0e0;
+}
+
+.quantity-display {
+margin: 0 15px;
+font-size: 1.2em;
+font-weight: bold;
+color: #333;
+}
+
+/* Add to Cart Button */
+.btn-add-to-cart-detail {
+background-color: #28a745; /* Green add to cart */
+color: white;
+border: none;
+padding: 15px 30px;
+font-size: 1.1em;
+font-weight: bold;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+margin-bottom: 20px;
+}
+
+.btn-add-to-cart-detail:hover {
+background-color: #218838;
+}
+
+/* Stock Status */
+.stock-status-detail {
+font-size: 1em;
+color: #555;
+}
+
+.stock-status-detail.in-stock {
+color: #198754; /* More vibrant green for in stock */
+font-weight: bold;
+}
+
+.stock-status-detail.out-of-stock {
+color: #dc3545; /* Red for out of stock */
+font-weight: bold;
+}

@@ -1,0 +1,199 @@
+/* CSS for contact.css */
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* This targets the two main divs inside the .contact-card */
+.contact-card > .map, 
+.contact-card > .contact-form-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.map {
+    order: 1;
+}
+
+.contact-form-content {
+    order: 2;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.map iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    border-radius: 10px;
+}
+
+.contact-card h2 {
+    color: #2e7d32;
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 600;
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    max-width: 150px;
+    height: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+}
+
+.form-group input,
+.form-group textarea {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+.btn-contact {
+    width: 100%;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-contact:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+}
+
+.back-text {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-text a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-text a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive layout for larger screens */
+@media (min-width: 768px) {
+    .contact-card {
+        flex-direction: row;
+    }
+
+    .map, .contact-form-content {
+        padding: 40px;
+    }
+}
+
+
+
+
+
+/* Additional styles for the contact page */
+/* Contact Info Section */
+
+
+/* Contact Info Section */
+.contact-info-section {
+    margin: 50px auto;
+    text-align: center;
+    max-width: 1000px;
+}
+
+.contact-info-section h2 {
+    font-size: 2em;
+    color: #2e7d32;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.contact-info-card {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-info-card .icon {
+    font-size: 2.5em;
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+.contact-info-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    color: #388e3c;
+}
+
+.contact-info-card p,
+.contact-info-card small {
+    margin: 3px 0;
+    font-size: 1em;
+    color: #333;
+}

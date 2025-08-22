@@ -1,0 +1,201 @@
+{% extends "dbApp/base.html"%}
+{% load static %}
+{% block title %} Daily basis{% endblock %}
+
+{% block content %}
+<div id="weather-widget">
+    <p class="loading-message">Fetching weather data...</p>
+</div>
+
+<section class="hero">
+    <div class="hero-content">
+        <img src="{% static 'images/daily-basis.jpg' %}" alt="Daily Basis" class="hero-logo">
+        <h1><span class="bold">Fresh Groceries</span> <span class="highlight">Daily</span></h1>
+        <p>Get the freshest produce, dairy, and essentials delivered to your doorstep.<br>
+            Quality you can trust, convenience you deserve.</p>
+        <button class="shop-btn" onclick="scrollToProducts()">Shop Now →</button>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-leaf"></i></i>
+        <h3>Fresh & Organic</h3>
+        <p>Locally sourced organic produce</p>
+    </div>
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-truck-fast"></i></i>
+        <h3>Fast Delivery</h3>
+        <p>Same-day delivery available</p>
+    </div>
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-clock"></i></i>
+        <h3>Always Fresh</h3>
+        <p>Daily replenished inventory</p>
+    </div>
+    <div class="feature">
+        <i class="icon"><i class="fa-solid fa-calendar-check"></i></i>
+        <h3>Quality Assured</h3>
+        <p>100% satisfaction guarantee</p>
+    </div>
+</section>
+
+<script>
+    function scrollToProducts() {
+        document.getElementById("product-section").scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+<div class="filter-bar">
+    <form action="{% url 'index' %}" method="GET" class="filter-form">
+        <div class="filter-group">
+            <label for="category">Filter by Category:</label>
+            <select name="category" id="category" class="filter-select">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="sort">Sort by Price:</label>
+            <select name="sort" id="sort" class="filter-select">
+                <option value="">Default</option>
+                <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Low to High</option>
+                <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>High to Low</option>
+            </select>
+        </div>
+        <button type="submit" class="filter-btn">Apply Filters</button>
+    </form>
+</div>
+
+<div id="product-section" class="product-section">
+    <h2>Featured Products</h2>
+    <p>Explore our handpicked selection of fresh groceries.</p>
+
+    <div class="product-grid">
+    {% for product in products %}
+    <div class="product-card"> {# Keep product-card as a wrapper div #}
+        {# This 'a' tag now wraps the image and info, but NOT the add-to-cart button #}
+        <a href="{% url 'details_page' product_id=product.id %}" class="product-link">
+            <div class="product-image-container">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                {% else %}
+                    {# Changed placeholder to align with your project's static structure #}
+                    <img src="{% static 'images/placeholder_product.jpg' %}" alt="No Image" class="product-image">
+                {% endif %}
+            </div>
+            <div class="product-info-container">
+                <h3 class="product-title">{{ product.name }}</h3>
+                <span class="product-category">{{ product.category }}</span>
+                <div class="product-price-and-action">
+                    <div class="price-stock">
+                        <span class="product-price">₹{{ product.price }}</span>
+                        <span class="stock-status">
+                            {% if product.stock > 0 %}
+                                In Stock ({{ product.stock }})
+                            {% else %}
+                                Out of Stock
+                            {% endif %}
+                        </span>
+                    </div>
+                    {# The add-to-cart button is now OUTSIDE this 'a' tag #}
+                    {# It needs 'data-product-id' for JavaScript to pick up #}
+                    <button class="add-to-cart-btn" data-product-id="{{ product.id }}">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </a> {# End of the 'a' tag for detail page #}
+        {# The "View Product" button remains here, potentially serving as an alternative click area for details #}
+        <button class="btn-view-product" onclick="window.location.href='{% url 'details_page' product_id=product.id %}'">View Product</button>
+    </div> {# End of product-card #}
+    {% endfor %}
+</div>
+
+
+
+<script src="{% static 'js/weather.js' %}"></script>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+    // Helper function to get CSRF token - CRUCIAL for POST requests in Django
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Function to show a green alert notification
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.classList.add('notification', 'success');
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        // Trigger reflow to ensure CSS transition plays
+        void notification.offsetWidth; 
+        notification.classList.add('show');
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            // Remove the element after the transition ends
+            setTimeout(() => notification.remove(), 500); 
+        }, 3000); // Display for 3 seconds
+    }
+
+    // The event listener for the '+' button on product cards in index.html
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            // Get product ID directly from the button's data attribute
+            const productId = this.dataset.productId; 
+            
+            const data = {
+                product_id: parseInt(productId),
+                quantity: 1 // Always add 1 from the product card
+            };
+
+            fetch('{% url "add_to_cart" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => { throw new Error(errorData.message || 'Server error'); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('An error occurred: ' + error.message + '. Please try again.');
+            });
+        });
+    });
+</script>
+{% endblock scripts %}

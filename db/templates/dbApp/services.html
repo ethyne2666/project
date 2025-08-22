@@ -1,0 +1,224 @@
+
+
+{% extends "dbApp/base.html" %}
+
+
+
+{% load static %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+
+
+<div class="services-page-container">
+    <div class="services-hero">
+        <h1 class="hero-heading">Our Services</h1>
+        <p class="hero-subheading">Comprehensive grocery solutions designed to make your life easier and more convenient.</p>
+    </div>
+
+    <div class="services-grid">
+        <!-- Service Card 1: Home Delivery -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <i class="fas fa-home service-icon"></i>
+            </div>
+            <h3 class="service-title">Home Delivery</h3>
+            <ul class="service-features">
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Order up to 200 items</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Free delivery over $50</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Real-time tracking</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Contactless delivery options</li>
+            </ul>
+        </div>
+
+        <!-- Service Card 2: Scheduled Delivery -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <i class="fas fa-calendar-alt service-icon"></i>
+            </div>
+            <h3 class="service-title">Scheduled Delivery</h3>
+            <ul class="service-features">
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Choose your delivery window</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Evening delivery slots</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Weekend availability</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> SMS & email notifications</li>
+            </ul>
+        </div>
+
+        <!-- Service Card 3: Subscription Service -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <i class="fas fa-box service-icon"></i>
+            </div>
+            <h3 class="service-title">Subscription Service</h3>
+            <ul class="service-features">
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Weekly or monthly deliveries</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Personalized product lists</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> 15% discount on subscriptions</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Easy modifications or cancellation</li>
+            </ul>
+        </div>
+
+        <!-- Service Card 4: Personal Shopping -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <i class="fas fa-shopping-basket service-icon"></i>
+            </div>
+            <h3 class="service-title">Personal Shopping</h3>
+            <ul class="service-features">
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Expert shoppers for you</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Safest grocery specialists</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Custom dietary requirements</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Quality guarantee</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Special occasion orders</li>
+            </ul>
+        </div>
+
+        <!-- Service Card 5: Quality Assurance -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <i class="fas fa-shield-alt service-icon"></i>
+            </div>
+            <h3 class="service-title">Quality Assurance</h3>
+            <ul class="service-features">
+                <li><i class="fas fa-check-circle feature-check-icon"></i> 100% satisfaction guarantee</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Fresh product guarantee</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Easy returns & refunds</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Temperature-controlled transport</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Quality inspections</li>
+            </ul>
+        </div>
+
+        <!-- Service Card 6: Wide Coverage -->
+        <div class="service-card">
+            <div class="service-icon-wrapper">
+                <i class="fas fa-globe-americas service-icon"></i>
+            </div>
+            <h3 class="service-title">Wide Coverage</h3>
+            <ul class="service-features">
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Expanding delivery area</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> City-wide delivery network</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Multiple pickup locations</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Expanding coverage areas</li>
+                <li><i class="fas fa-check-circle feature-check-icon"></i> Rural delivery options</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="service-section">
+        <h2 class="section-heading">Service Areas</h2>
+        <p class="section-subheading">We are expanding our delivery coverage every month.</p>
+        <div class="areas-grid">
+            <div class="area-box">
+                <h4 class="area-title">Downtown</h4>
+                <p class="area-description">Full coverage with 2-hour delivery windows and next-day scheduled options.</p>
+            </div>
+            <div class="area-box">
+                <h4 class="area-title">Suburbs</h4>
+                <p class="area-description">Next-day delivery standard, with selected 4-hour time slots available.</p>
+            </div>
+            <div class="area-box">
+                <h4 class="area-title">Rural Areas</h4>
+                <p class="area-description">Weekly delivery service with larger order minimum and extended lead times.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="service-section">
+        <h2 class="section-heading">Delivery Pricing</h2>
+        <p class="section-subheading">Transparent and affordable delivery options</p>
+        <div class="pricing-table">
+            <div class="pricing-column">
+                <h4 class="pricing-title">Standard Delivery</h4>
+                <ul class="pricing-features">
+                    <li>Orders under $50: <span class="pricing-value">$4.99</span></li>
+                    <li>Orders $50+: <span class="pricing-value">Free</span></li>
+                    <li>Express Delivery: <span class="pricing-value">$7.99</span></li>
+                </ul>
+            </div>
+            <div class="pricing-column">
+                <h4 class="pricing-title">Subscription Benefits</h4>
+                <ul class="pricing-features">
+                    <li>Monthly subscription: <span class="pricing-value">$9.99/month</span></li>
+                    <li>Free delivery: <span class="pricing-value">Yes</span></li>
+                    <li>Product discount: <span class="pricing-value">10% off</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="container py-5">
+  <h1 class="text-center mb-5">Pricing</h1>
+  <p class="text-center text-muted mb-5">
+    Our pricings are designed to be flexible and affordable, catering to all your grocery needs. Choose the plan that suits you best!
+  </p>
+
+  <div class="row text-center">
+    
+    <!-- Free Plan -->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 fw-normal">Free</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>10 per delivery</li>
+            <li>2 times</li>
+            <li>basics</li>
+            <li>Help center access</li>
+          </ul>
+          <a href="#" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pro Plan -->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 fw-normal">Pro</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$25 <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>50 deliverys</li>
+            <li>whole week delivery</li>
+            <li>Priority email support</li>
+            <li>Help center access</li>
+            <li>cancellation available</li>
+
+          </ul>
+          <a href="#" class="w-100 btn btn-lg btn-primary">Get started</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enterprise Plan -->
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 fw-normal">Enterprise</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title">$50 <small class="text-muted">/ mo</small></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>100 deliverys</li>
+            <li>whole week delivery</li>
+            <li>Priority email support</li>
+            <li>Help center access</li>
+            <li>cancellation available</li>
+            <li>return the products next day if any query abou that </li>
+          </ul>
+          <a href="#" class="w-100 btn btn-lg btn-primary">recommended</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  
+{% endblock %}
+
