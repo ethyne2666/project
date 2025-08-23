@@ -1,5 +1,4 @@
 
-
 /* Product Detail Page Styles */
 .product-detail-page {
 padding: 30px 0;
@@ -123,5 +122,5 @@ font-weight: bold;
 
 .stock-status-detail.out-of-stock {
 color: #dc3545; /* Red for out of stock */
-font-weight: bold;
+font-weight: bold;
 }

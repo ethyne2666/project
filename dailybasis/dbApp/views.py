@@ -14,8 +14,8 @@ from django.db.models import Q # Import Q object for complex queries
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-
-
+import requests
+from .forms import ScheduleForm
 
 
 
@@ -323,3 +323,83 @@ def delete_address(request, address_id):
     except Address.DoesNotExist:
         messages.error(request, "Address not found.")
     return redirect("saved_addresses")
+
+
+
+
+
+# ai agent
+
+API_KEY = "AIzaSyA_Ppr9gJYV9MS4vCRwhWjMdaA5F-a8w6k"   
+
+@csrf_exempt
+def gemini_chat(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user_message = data.get("message", "")
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "contents": [
+                {"parts": [{"text": user_message}]}
+            ]
+        }
+
+        try:
+            response = requests.post(url, headers=headers, json=payload)
+            result = response.json()
+            print("Gemini API raw response:", result)  # for debugging
+
+            reply = "Sorry, I couldn’t get a response."
+            if "candidates" in result and len(result["candidates"]) > 0:
+                parts = result["candidates"][0]["content"].get("parts", [])
+                if parts and "text" in parts[0]:
+                    reply = parts[0]["text"]
+
+            return JsonResponse({"reply": reply})
+
+        except Exception as e:
+            print("Error while calling Gemini API:", e)
+            return JsonResponse({"reply": "Error: Could not reach AI service."})
+
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        del cart[str(product_id)]
+        request.session['cart'] = cart
+        request.session.modified = True   # <-- Important
+    return JsonResponse({'status': 'ok'})
+
+
+# added calander to the detail page
+
+
+def purchase_schedule(request):
+    if request.method == "POST":
+        form = ScheduleForm(request.POST)
+        product_id = request.POST.get("product_id")
+        price = request.POST.get("price")
+        product = get_object_or_404(Product, id=product_id)
+
+        if form.is_valid():
+            # ✅ Valid form: Save or process subscription
+            # For now just redirect or show success
+            return render(request, "dbApp/success.html", {
+                "product": product,
+                "price": price,
+                "form": form,
+            })
+        else:
+            # ❌ Invalid form: Errors will be available in form.errors
+            return render(request, "dbApp/purchase_schedule.html", {
+                "form": form,
+                "product": product,
+                "price": price,
+            })
+
+    else:  # GET request
+        form = ScheduleForm()
+        return render(request, "dbApp/purchase_schedule.html",{"form": form})
+

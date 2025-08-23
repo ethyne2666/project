@@ -94,6 +94,67 @@
         {% block content %}
         {% endblock content %}
     </main>
+    
+
+    {% comment %} ai chat bot {% endcomment %}
+
+    <div id="chat-widget">
+    <div id="chat-header">AI Assistant ✨ <span id="close-chat">×</span></div>
+    <div id="chat-box"></div>
+    <div id="chat-input">
+        <input type="text" id="user-message" placeholder="Type your message..." />
+        <button id="send-btn">Send</button>
+    </div>
+</div>
+
+<button id="chat-toggle">💬</button>
+
+<script>
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatWidget = document.getElementById("chat-widget");
+    const closeChat = document.getElementById("close-chat");
+    const sendBtn = document.getElementById("send-btn");
+    const chatBox = document.getElementById("chat-box");
+    const userInput = document.getElementById("user-message");
+
+    toggleBtn.onclick = () => {
+        chatWidget.style.display = "flex";
+        toggleBtn.style.display = "none";
+    };
+
+    closeChat.onclick = () => {
+        chatWidget.style.display = "none";
+        toggleBtn.style.display = "block";
+    };
+
+    sendBtn.onclick = async () => {
+        const message = userInput.value;
+        if (!message) return;
+
+        chatBox.innerHTML += `<div><b>You:</b> ${message}</div>`;
+        userInput.value = "";
+
+        const response = await fetch("/gemini-chat/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({message})
+        });
+
+        const data = await response.json();
+        chatBox.innerHTML += `<div><b>AI:</b> ${data.reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    };
+
+    
+</script>
+
+
+
+
+
+
+
+
 
     <footer class="footer">
         <div class="container footer-grid">

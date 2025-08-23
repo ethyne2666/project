@@ -1,0 +1,40 @@
+
+
+{% extends "dbApp/base.html" %}
+
+{% block title %}Purchase Schedule{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow p-4">
+                <h2 class="mb-4 text-center">Schedule Order</h2>
+
+               <form method="post">
+    {% csrf_token %}
+
+    <!-- Dates -->
+    <div class="mb-3">
+        <label class="form-label">Start Date</label>
+        {{ form.start_date }}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">End Date</label>
+        {{ form.end_date }}
+    </div>
+
+    <!-- Delivery Time -->
+    <div class="mb-3">
+        <label class="form-label">Preferred Delivery Time</label>
+        {{ form.delivery_time }}
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Proceed To Checkout</button>
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

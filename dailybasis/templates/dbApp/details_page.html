@@ -23,6 +23,13 @@
                 <button class="btn-quantity-detail plus-btn" data-product-id="{{ product.id }}">+</button>
             </div>
             <button class="btn-add-to-cart-detail" data-product-id="{{ product.id }}" data-price="{{ product.price }}">Add to Cart</button>
+
+            <form method="post" action="{% url 'purchase_schedule' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="hidden" name="price" value="{{ product.price }}">
+                <button type="submit" class="btn-add-to-cart-schedule">Schedule My Order</button>
+       </form>
             
             <p class="stock-status-detail">
                 {% if product.stock > 0 %}

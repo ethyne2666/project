@@ -73,6 +73,24 @@
                 if (currentQuantity > 1) {
                     currentQuantity--;
                     currentQuantityElement.textContent = currentQuantity;
+                } else {
+                    // ✅ Remove from backend session also
+                    const cartItem = target.closest('.cart-item');
+                    const productId = cartItem.dataset.productId;
+
+                    fetch(`/remove-from-cart/${productId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'ok') {
+                            cartItem.remove();
+                            updateSummary();
+                        }
+                    });
                 }
             }
             updateSummary();
@@ -80,7 +98,16 @@
 
         function updateSummary() {
             let subtotal = 0;
-            document.querySelectorAll('.cart-item').forEach(item => {
+            const items = document.querySelectorAll('.cart-item');
+
+            if (items.length === 0) {
+                cartItemsList.innerHTML = '<p class="empty-cart-message">Your cart is empty.</p>';
+                subtotalPriceElement.textContent = '₹0.00';
+                totalPriceElement.textContent = `₹${deliveryFee.toFixed(2)}`;
+                return;
+            }
+
+            items.forEach(item => {
                 const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('₹', ''));
                 const quantity = parseInt(item.querySelector('.quantity-display').textContent);
                 subtotal += price * quantity;

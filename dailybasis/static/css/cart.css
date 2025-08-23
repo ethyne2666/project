@@ -170,3 +170,19 @@ hr {
 .notification.success {
     background-color: #28a745;
 }
+
+
+
+
+.btn-add-to-cart-schedule{
+background-color: #28a745; /* Green add to cart */
+color: white;
+border: none;
+padding: 15px 30px;
+font-size: 1.1em;
+font-weight: bold;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+margin-bottom:20px;
+}
