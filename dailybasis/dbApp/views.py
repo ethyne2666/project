@@ -7,12 +7,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login as auth_login
 from django.contrib.auth.decorators import login_required
-from .models import UserData,Product ,ProductImage
+from .models import UserData,Product ,ProductImage, Address
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from django.db.models import Q # Import Q object for complex queries
 from django.http import JsonResponse
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -277,3 +278,48 @@ def cart_view(request):
         'total': total
     }
     return render(request, 'dbApp/cart.html', context)
+
+
+def saved_addresses(request):
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return redirect('login')
+    user = UserData.objects.get(id=user_id)
+    addresses = Address.objects.filter(user=user)
+    return render(request, 'dbApp/saved_addresses.html', {'addresses': addresses})
+
+def add_address(request):
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return redirect('login')
+    if request.method == "POST":
+        address_line = request.POST.get("address_line")
+        city = request.POST.get("city")
+        state = request.POST.get("state")
+        pincode = request.POST.get("pincode")
+        country = request.POST.get("country", "India")  # default value
+
+        Address.objects.create(
+            user=UserData.objects.get(id=user_id),
+            address_line=address_line,
+            city=city,
+            state=state,
+            pincode=pincode,
+            country=country
+        )
+        messages.success(request, "Address added successfully!")
+        return redirect("saved_addresses")
+
+    return render(request, "dbApp/add_address.html")
+
+def delete_address(request, address_id):
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return redirect('login')
+    try:
+        address = Address.objects.get(id=address_id, user_id=user_id)
+        address.delete()
+        messages.success(request, "Address deleted successfully!")
+    except Address.DoesNotExist:
+        messages.error(request, "Address not found.")
+    return redirect("saved_addresses")

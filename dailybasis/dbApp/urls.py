@@ -3,6 +3,7 @@ from django.urls import path
 from dbApp import views
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 
 
 
@@ -22,6 +23,9 @@ urlpatterns = [
     path("search_results/", views.search_results, name="search_results"),
     path('add_to_cart/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_view, name='cart_view'),
+    path('saved_addresses/', views.saved_addresses, name='saved_addresses'),
+    path('add_address/', views.add_address, name='add_address'),
+    path('delete_address/<int:address_id>/', views.delete_address, name='delete_address'),
 
     # Corrected and simplified product detail page URL
     path('product/<int:product_id>/', views.details_page, name='details_page'),
