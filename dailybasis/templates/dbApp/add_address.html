@@ -1,0 +1,32 @@
+{% extends "dbApp/base.html" %}
+{% block content %}
+<div class="login-container">
+  <div class="login-card">
+    <h2>Add Address</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+          <label for="address_line">Address Line</label>
+          <input type="text" name="address_line" required>
+      </div>
+      <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" name="city" required>
+      </div>
+      <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" name="state" required>
+      </div>
+      <div class="form-group">
+          <label for="pincode">Pincode</label>
+          <input type="text" name="pincode" required>
+      </div>
+      <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" name="country" value="India">
+      </div>
+      <button type="submit" class="btn-login">Save Address</button>
+   </form>
+  </div>
+</div>
+{% endblock %}
