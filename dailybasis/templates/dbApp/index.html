@@ -75,14 +75,12 @@
 
     <div class="product-grid">
     {% for product in products %}
-    <div class="product-card"> {# Keep product-card as a wrapper div #}
-        {# This 'a' tag now wraps the image and info, but NOT the add-to-cart button #}
+    <div class="product-card">
         <a href="{% url 'details_page' product_id=product.id %}" class="product-link">
             <div class="product-image-container">
                 {% if product.image %}
                     <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
                 {% else %}
-                    {# Changed placeholder to align with your project's static structure #}
                     <img src="{% static 'images/placeholder_product.jpg' %}" alt="No Image" class="product-image">
                 {% endif %}
             </div>
@@ -100,31 +98,25 @@
                             {% endif %}
                         </span>
                     </div>
-                    {# The add-to-cart button is now OUTSIDE this 'a' tag #}
-                    {# It needs 'data-product-id' for JavaScript to pick up #}
                     <button class="add-to-cart-btn" data-product-id="{{ product.id }}">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
             </div>
-        </a> {# End of the 'a' tag for detail page #}
-        {# The "View Product" button remains here, potentially serving as an alternative click area for details #}
+        </a>
         <button class="btn-view-product" onclick="window.location.href='{% url 'details_page' product_id=product.id %}'">View Product</button>
-    </div> {# End of product-card #}
+    </div>
     {% endfor %}
+    </div>
 </div>
-
-
 
 <script src="{% static 'js/weather.js' %}"></script>
 
-{% endblock %}
-
-
+{% endblock content %} {# Make sure this block ends here #}
 
 {% block scripts %}
 <script>
-    // Helper function to get CSRF token - CRUCIAL for POST requests in Django
+    // Helper function to get CSRF token
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -153,47 +145,49 @@
 
         setTimeout(() => {
             notification.classList.remove('show');
-            // Remove the element after the transition ends
             setTimeout(() => notification.remove(), 500); 
-        }, 3000); // Display for 3 seconds
+        }, 3000); 
     }
 
-    // The event listener for the '+' button on product cards in index.html
-    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault(); 
-            // Get product ID directly from the button's data attribute
-            const productId = this.dataset.productId; 
-            
-            const data = {
-                product_id: parseInt(productId),
-                quantity: 1 // Always add 1 from the product card
-            };
+    document.addEventListener('DOMContentLoaded', function() {
+        // Event listener for the '+' button on product cards in index.html
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                const productId = this.dataset.productId; 
+                
+                const data = {
+                    product_id: parseInt(productId),
+                    quantity: 1
+                };
 
-            fetch('{% url "add_to_cart" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errorData => { throw new Error(errorData.message || 'Server error'); });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    showNotification(data.message);
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                alert('An error occurred: ' + error.message + '. Please try again.');
+                fetch('{% url "add_to_cart" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errorData => { throw new Error(errorData.message || 'Server error'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showNotification(data.message);
+                        // Optional: Update cart icon count in the header if you have one
+                        // updateCartIconDisplay(data.item_count);
+                    } else {
+                        alert('Error: ' + data.message); 
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    alert('An error occurred: ' + error.message + '. Please try again.');
+                });
             });
         });
     });
