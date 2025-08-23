@@ -335,66 +335,9 @@ main {
 }
 
 
-/* Weather Widget Styles */
-#weather-widget {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #4CAF50; /* A nice green color */
-    color: #fff;
-    font-family: Arial, sans-serif;
-    padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    max-width: 90%;
-    min-width: 300px;
-}
 
-#weather-widget .weather-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
-    filter: invert(1);
-}
 
-#weather-widget .weather-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-#weather-widget .temperature {
-    font-size: 2.2em;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-#weather-widget .description {
-    font-size: 1.1em;
-    text-transform: capitalize;
-}
-
-.loading-message {
-    font-size: 1.2em;
-    font-style: italic;
-    color: #fff;
-}
-
-/* For smaller screens, stack the elements if needed */
-@media (max-width: 600px) {
-    #weather-widget {
-        flex-direction: column;
-        text-align: center;
-    }
-    #weather-widget .weather-icon {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-    #weather-widget .weather-info {
-        align-items: center;
-    }
-}
 
 .carousel {
   width: 400px;          

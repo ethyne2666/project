@@ -31,7 +31,7 @@ urlpatterns = [
     path('cart/', include('dbApp.urls')),
     path('login/', include('dbApp.urls')),
     path('signup/', include('dbApp.urls')),
-    path('checkout/', include('dbApp.urls')),
+    path('payment/', include('dbApp.urls')),
     path('services/', include('dbApp.urls')),
     path('logout/', include('dbApp.urls')),
     path('dashboard/', include('dbApp.urls')),

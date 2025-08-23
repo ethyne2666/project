@@ -186,3 +186,30 @@ cursor: pointer;
 transition: background-color 0.3s ease;
 margin-bottom:20px;
 }
+
+
+
+
+
+.btn-checkout {
+    /* Your existing button styles */
+    background-color: #28a745;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center; /* Ensures text is centered if button has fixed width */
+    display: block; /* Make it a block element to take full width of its container */
+    width: 100%; /* Ensure it spans the full width */
+
+    /* Add this line to remove the underline */
+    text-decoration: none; 
+}
+
+.btn-checkout:hover {
+    background-color: #218838;
+}

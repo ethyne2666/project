@@ -30,24 +30,28 @@
         {% endif %}
     </div>
 
-    <div class="order-summary-section">
-        <h2 class="summary-title">Order Summary</h2>
-        <div class="summary-line">
-            <span>Subtotal</span>
-            <span id="subtotal-price">₹{{ subtotal|floatformat:2 }}</span>
-        </div>
-        <div class="summary-line">
-            <span>Delivery Fee</span>
-            <span id="delivery-price">₹{{ delivery_fee|floatformat:2 }}</span>
-        </div>
-        <hr>
-        <div class="summary-line total">
-            <span>Total</span>
-            <span id="total-price">₹{{ total|floatformat:2 }}</span>
-        </div>
-        <button class="btn-checkout">Proceed to Checkout</button>
+
+
+<div class="order-summary-section">
+    <h2 class="summary-title">Order Summary</h2>
+    <div class="summary-line">
+        <span>Subtotal</span>
+        <span id="subtotal-price">₹{{ subtotal|floatformat:2 }}</span>
     </div>
+    <div class="summary-line">
+        <span>Delivery Fee</span>
+        <span id="delivery-price">₹{{ delivery_fee|floatformat:2 }}</span>
+    </div>
+    <hr>
+    <div class="summary-line total">
+        <span>Total</span>
+        <span id="total-price">₹{{ total|floatformat:2 }}</span>
+    </div>
+    {# CHANGED: From <button> to <a> tag #}
+    <a href="{% url 'payment' %}" class="btn-checkout">Proceed to Checkout</a>
 </div>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

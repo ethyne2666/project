@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 
 # Create your models here.
 
@@ -55,3 +57,24 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.address_line}, {self.city}"
+    
+
+
+# class purchases(models.Model):
+#     user = models.ForeignKey(UserData, on_delete=models.CASCADE, related_name='orders')
+#     order_date = models.DateTimeField(default=timezone.now)
+#     status = models.CharField(max_length=50, default='Pending')  # Pending, Shipped, Delivered, Cancelled
+#     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+#     def _str_(self):
+#         return f"Orders #{self.id} by {self.user.username}"
+
+
+# class purchasesItems(models.Model):
+#     order = models.ForeignKey(purchases, on_delete=models.CASCADE, related_name='items')
+#     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+#     quantity = models.PositiveIntegerField(default=1)
+#     price_per_item = models.DecimalField(max_digits=10, decimal_places=2)
+
+#     def _str_(self):
+#         return f"{self.quantity} x {self.product.name} for Order #{self.purchases.id}"

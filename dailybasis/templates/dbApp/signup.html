@@ -19,10 +19,13 @@
         <!-- Login Form -->
         <form method="POST" action="{% url 'signup' %}">
             {% csrf_token %}
+            
             <div class="form-group">
-                <label for="name">User Name</label>
-                <input type="text" id="username" name="username" required placeholder="Enter your name">
-            </div>
+                   <label for="username">User Name</label>
+                   <input type="text" id="username" name="username" required placeholder="Enter your name">
+                   <small id="username-status"></small>
+              </div>
+
 
             <div class="form-group">
                 <label for="email">Email</label>
@@ -52,4 +55,43 @@
         </p>
     </div>
 </div>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const usernameInput = document.getElementById("username");
+    const statusMsg = document.getElementById("username-status");
+    const submitBtn = document.querySelector(".btn-login");
+
+    usernameInput.addEventListener("input", function() {
+        const username = usernameInput.value.trim();
+        if (username.length < 3) {
+            statusMsg.textContent = "Username must be at least 3 characters.";
+            statusMsg.style.color = "red";
+            submitBtn.disabled = true;
+            return;
+        }
+
+        fetch(`/check-username/?username=${username}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    statusMsg.textContent = "❌ Username already taken";
+                    statusMsg.style.color = "red";
+                    submitBtn.disabled = true;
+                } else {
+                    statusMsg.textContent = "✅ Username available";
+                    statusMsg.style.color = "green";
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error("Error checking username:", error);
+            });
+    });
+});
+</script>
+
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends "dbApp/base.html" %}
+{% load static %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+<div class="payment-container">
+    <h2 class="payment-title">Checkout & Payment</h2>
+
+    <div class="order-summary">
+        <h3>Order Summary</h3>
+        <p><strong>Subtotal:</strong> ₹{{ subtotal }}</p>
+        <p><strong>Delivery Fee:</strong> ₹{{ delivery_fee }}</p>
+        <hr>
+        <p class="total"><strong>Total:</strong> ₹{{ total }}</p>
+    </div>
+
+    <div class="payment-methods">
+        <h3>Select Payment Method</h3>
+        <form method="POST" action="{% url 'process_payment' %}">
+            {% csrf_token %}
+
+            <label>
+                <input type="radio" name="payment_method" value="cod" checked>
+                Cash on Delivery
+            </label><br>
+
+            <label>
+                <input type="radio" name="payment_method" value="upi">
+                UPI / Wallet
+            </label><br>
+
+            <label>
+                <input type="radio" name="payment_method" value="card">
+                Credit / Debit Card
+            </label><br><br>
+
+            <button type="submit" class="btn-pay">Proceed to Pay</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

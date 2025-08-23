@@ -83,3 +83,10 @@
 .login-card .signup-text a:hover {
     text-decoration: underline;
 }
+
+
+#username-status {
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}

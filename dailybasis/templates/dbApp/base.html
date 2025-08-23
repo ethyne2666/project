@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static 'css/search_results.css' %}">
     <link rel="stylesheet" href="{% static 'css/detail_page.css' %}">
     <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
 
     {# Favicons #}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/db.ico' %}">
@@ -145,7 +146,7 @@
         chatBox.scrollTop = chatBox.scrollHeight;
     };
 
-    
+
 </script>
 
 
@@ -168,7 +169,7 @@
             <div class="footer-column">
                 <h4 class="footer-heading">Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'index' %}">Home</a></li>
                     <li><a href="{% url 'aboutus' %}">About Us</a></li>
                     <li><a href="{% url 'services' %}">Services</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
@@ -222,6 +223,36 @@
     {# THIS IS THE MISSING BLOCK! All page-specific JS goes here. #}
     {% block scripts %}
     {% endblock scripts %}
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const fab = document.getElementById('weather-fab');
+    const widget = document.getElementById('weather-widget');
+
+    // open popup
+    fab.addEventListener('click', () => {
+      widget.classList.add('show');
+    });
+
+    // close when clicking the × button
+    widget.addEventListener('click', (e) => {
+      if (e.target.classList.contains('weather-close')) {
+        widget.classList.remove('show');
+      }
+    });
+
+    // optional: click outside to close
+    document.addEventListener('click', (e) => {
+      const clickedOutside = !widget.contains(e.target) && !fab.contains(e.target);
+      if (widget.classList.contains('show') && clickedOutside) {
+        widget.classList.remove('show');
+      }
+    });
+  });
+</script>
+
+
 
 </body>
 </html>

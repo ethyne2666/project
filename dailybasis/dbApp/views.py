@@ -16,6 +16,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from .forms import ScheduleForm
+from django.contrib import messages
 
 
 
@@ -59,6 +60,13 @@ def signup(request):
         return redirect("login")
 
     return render(request, "dbApp/signup.html")
+
+def check_username(request):
+    username = request.GET.get("username", None)
+    if username:
+        exists = UserData.objects.filter(username=username).exists()
+        return JsonResponse({"exists": exists})
+    return JsonResponse({"exists": False})
 
 
 # Login view
@@ -107,8 +115,48 @@ def myProfile(request):
     return render(request, 'dbApp/myProfile.html', {'user': user})
 
 
-def checkout(request):
-    return render(request,'dbApp/checkout.html')
+
+
+
+
+# payment page 
+
+
+def payment_page(request):
+    # Example: Get totals from session/cart
+    subtotal = request.session.get("subtotal", 0)
+    delivery_fee = request.session.get("delivery_fee", 30)
+    total = subtotal + delivery_fee
+
+    return render(request, "dbApp/payment.html", {
+        "subtotal": subtotal,
+        "delivery_fee": delivery_fee,
+        "total": total
+    })
+
+
+def process_payment(request):
+    if request.method == "POST":
+        payment_method = request.POST.get("payment_method")
+
+        # Fake payment processing
+        if payment_method == "cod":
+            messages.success(request, "Order placed successfully with Cash on Delivery!")
+        elif payment_method == "upi":
+            messages.success(request, "Redirecting to UPI payment gateway...")
+        elif payment_method == "card":
+            messages.success(request, "Redirecting to Card payment gateway...")
+        else:
+            messages.error(request, "Invalid payment method selected.")
+
+        return redirect("index")  # after payment redirect to home
+
+
+
+
+
+
+
 
 
 def services(request):
@@ -249,6 +297,9 @@ def add_to_cart(request):
     
     return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=405)
 
+
+
+
 def cart_view(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -268,8 +319,9 @@ def cart_view(request):
             'total_price': total_item_price
         })
 
-    delivery_fee = 4.99
-    total = subtotal + delivery_fee
+    delivery_fee = 4.99 # Assuming a fixed delivery fee
+    # Calculate total: only add delivery fee if there are items in the cart
+    total = subtotal + delivery_fee if cart_items else 0 
 
     context = {
         'cart_items': cart_items,
@@ -278,6 +330,8 @@ def cart_view(request):
         'total': total
     }
     return render(request, 'dbApp/cart.html', context)
+
+
 
 
 def saved_addresses(request):

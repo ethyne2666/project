@@ -3,9 +3,7 @@
 {% block title %} Daily basis{% endblock %}
 
 {% block content %}
-<div id="weather-widget">
-    <p class="loading-message">Fetching weather data...</p>
-</div>
+
 
 <section class="hero">
     <div class="hero-content">
@@ -110,11 +108,11 @@
     </div>
 </div>
 
-<script src="{% static 'js/weather.js' %}"></script>
 
 {% endblock content %} {# Make sure this block ends here #}
 
 {% block scripts %}
+
 <script>
     // Helper function to get CSRF token
     function getCookie(name) {
@@ -192,4 +190,23 @@
         });
     });
 </script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const fab = document.getElementById("weather-fab");
+    const widget = document.getElementById("weather-widget");
+
+    fab.addEventListener("click", () => {
+      widget.classList.toggle("show");
+    });
+
+    widget.addEventListener("click", (e) => {
+      if (e.target.classList.contains("weather-close")) {
+        widget.classList.remove("show");
+      }
+    });
+  });
+</script>
+
 {% endblock scripts %}
