@@ -34,6 +34,8 @@ urlpatterns = [
     path('product/<int:product_id>/', views.details_page, name='details_page'),
     path('remove-from-cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('subscriptions/add/', views.purchase_schedule, name='purchase_schedule'),
+    path('initiate-phonepe-payment/', views.initiate_phonepe_payment, name='initiate_phonepe_payment'),
+
 
 ]
 

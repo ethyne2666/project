@@ -47,8 +47,13 @@
         <span>Total</span>
         <span id="total-price">₹{{ total|floatformat:2 }}</span>
     </div>
-    {# CHANGED: From <button> to <a> tag #}
-    <a href="{% url 'payment' %}" class="btn-checkout">Proceed to Checkout</a>
+
+    {# CHECK FOR ITEMS BEFORE DISPLAYING CHECKOUT BUTTON #}
+    {% if cart_items %}
+        <a href="{% url 'payment' %}" class="btn-checkout">Proceed to Checkout</a>
+    {% else %}
+        <a href="#" class="btn-checkout disabled">Proceed to Checkout</a>
+    {% endif %}
 </div>
 
 

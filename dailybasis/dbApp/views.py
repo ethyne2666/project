@@ -319,9 +319,13 @@ def cart_view(request):
             'total_price': total_item_price
         })
 
-    delivery_fee = 4.99 # Assuming a fixed delivery fee
-    # Calculate total: only add delivery fee if there are items in the cart
-    total = subtotal + delivery_fee if cart_items else 0 
+    delivery_fee = 40.99  # Using 40.99 from your screenshot
+    total = subtotal + delivery_fee if cart_items else 0
+    
+    # Store the calculated totals in the session
+    request.session['subtotal'] = subtotal
+    request.session['delivery_fee'] = delivery_fee
+    request.session['total'] = total
 
     context = {
         'cart_items': cart_items,
@@ -457,3 +461,20 @@ def purchase_schedule(request):
         form = ScheduleForm()
         return render(request, "dbApp/purchase_schedule.html",{"form": form})
 
+
+
+
+
+
+def initiate_phonepe_payment(request):
+    """
+    Placeholder view for initiating a PhonePe payment.
+    You will add your PhonePe API integration logic here.
+    """
+    if request.method == 'POST':
+        # You would typically generate a payment link or QR code
+        # using the PhonePe API here.
+        # For now, we'll just show a success message.
+        messages.success(request, "PhonePe payment initiated! Please complete the transaction.")
+        return redirect('index') # Redirect to home page or a success page
+    return render(request, 'dbApp/payment.html') # Or a page showing payment details

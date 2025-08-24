@@ -4,20 +4,21 @@
 {% block title %}Payment{% endblock %}
 
 {% block content %}
+
 <div class="payment-container">
     <h2 class="payment-title">Checkout & Payment</h2>
 
     <div class="order-summary">
         <h3>Order Summary</h3>
-        <p><strong>Subtotal:</strong> ₹{{ subtotal }}</p>
-        <p><strong>Delivery Fee:</strong> ₹{{ delivery_fee }}</p>
+        <p><strong>Subtotal:</strong> ₹{{ subtotal|floatformat:2 }}</p>
+        <p><strong>Delivery Fee:</strong> ₹{{ delivery_fee|floatformat:2 }}</p>
         <hr>
-        <p class="total"><strong>Total:</strong> ₹{{ total }}</p>
+        <p class="total"><strong>Total:</strong> ₹{{ total|floatformat:2 }}</p>
     </div>
 
     <div class="payment-methods">
         <h3>Select Payment Method</h3>
-        <form method="POST" action="{% url 'process_payment' %}">
+        <form id="payment-form" method="POST" action="{% url 'process_payment' %}">
             {% csrf_token %}
 
             <label>
@@ -26,18 +27,88 @@
             </label><br>
 
             <label>
-                <input type="radio" name="payment_method" value="upi">
+                <input type="radio" name="payment_method" value="upi" id="upi-radio">
                 UPI / Wallet
             </label><br>
 
+            <div class="qr-code-section" id="upi-qr-section" style="display: none;">
+                <p>Scan the QR code below or enter a UPI ID to pay. </p>
+                <img src="{% static 'images/qr_code.jpg' %}" alt="UPI QR Code">
+                <br>
+                <label for="upi-id">Or Enter UPI ID</label>
+                <input type="text" id="upi-id" name="upi_id" placeholder="yourname@bank" style="display: block; margin: 10px auto; width: 80%;">
+            </div>
+
             <label>
-                <input type="radio" name="payment_method" value="card">
+                <input type="radio" name="payment_method" value="card" id="card-radio">
                 Credit / Debit Card
-            </label><br><br>
+            </label><br>
+
+            <div class="payment-details" id="card-details-section" style="display: none;">
+                <label for="phone-number">Phone Number</label>
+                <input 
+                    type="tel" 
+                    id="phone-number" 
+                    name="phone_number" 
+                    placeholder="10 digit number" 
+                    pattern="[0-9]{10}" 
+                    title="Phone number must be exactly 10 digits" 
+                    required
+                >
+
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" name="card_number" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+                
+                <label for="card-holder-name">Card Holder Name</label>
+                <input type="text" id="card-holder-name" name="card_holder_name" required>
+
+                <div class="card-expiry-cvv">
+                    <div>
+                        <label for="card-expiry">Expiry Date</label>
+                        <input type="text" id="card-expiry" name="card_expiry" placeholder="MM/YY" required>
+                    </div>
+                    <div>
+                        <label for="card-cvv">CVV</label>
+                        <input type="text" id="card-cvv" name="card_cvv" placeholder="CVV" required>
+                    </div>
+                </div>
+            </div>
 
             <button type="submit" class="btn-pay">Proceed to Pay</button>
         </form>
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+        const upiSection = document.getElementById('upi-qr-section');
+        const cardSection = document.getElementById('card-details-section');
+        const paymentForm = document.getElementById('payment-form');
+
+        // Initial check on page load to hide sections if COD is selected
+        if (document.querySelector('input[name="payment_method"][value="cod"]').checked) {
+            upiSection.style.display = 'none';
+            cardSection.style.display = 'none';
+        }
+
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Hide all optional sections first
+                upiSection.style.display = 'none';
+                cardSection.style.display = 'none';
+
+                // Show the selected section and update form action
+                if (this.value === 'upi') {
+                    upiSection.style.display = 'block';
+                    // This is where you would dynamically change the action for UPI
+                    // For example: paymentForm.action = "{% url 'initiate_phonepe_payment' %}";
+                } else if (this.value === 'card') {
+                    cardSection.style.display = 'block';
+                    // This is where you would dynamically change the action for cards
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

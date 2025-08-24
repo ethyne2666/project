@@ -1,0 +1,59 @@
+{% extends "dbApp/base.html" %}
+{% load static %}
+
+{% block title %}Returned Products{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    
+    <!-- Sidebar - This structure should match your myProfile.html sidebar -->
+    <div class="profile-sidebar">
+        <h2>Hello, {{ user.username }}</h2>
+        <ul>
+            <li><a href="{% url 'myProfile' %}" class="{% if active_tab == 'my_orders' %}active{% endif %}">My Orders</a></li>
+            <li><a href="{% url 'returned_products' %}" class="{% if active_tab == 'returned_items' %}active{% endif %}">Returned Items</a></li>
+            {# Placeholder links, replace with actual URLs when available #}
+            <li><a href="{% url 'myProfile' %}#account-details">Account Details</a></li>
+            <li><a href="{% url 'saved_addresses' %}">Saved Addresses</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="#">Wishlist</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content for Returned Products -->
+    <div class="profile-main">
+        <h1>My Returned Items</h1>
+
+        <div class="profile-section">
+            <h3>Your Returned Items History</h3>
+            {# You would loop through actual returned products here #}
+            {% comment %}
+            {% if returned_products %}
+                <div class="returned-items-list">
+                    {% for item in returned_products %}
+                        <div class="returned-item-card">
+                            <p><strong>Product:</strong> {{ item.product.name }}</p>
+                            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            <p><strong>Return Date:</strong> {{ item.return_date }}</p>
+                            <p><strong>Reason:</strong> {{ item.reason }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>You have no returned items to display at the moment.</p>
+                <a href="{% url 'index' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+            {% endif %}
+            {% endcomment %}
+            
+            <p>You have no returned items to display at the moment.</p> {# Placeholder content #}
+            <a href="{% url 'index' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {# Any specific JavaScript for this page goes here, if needed #}
+{% endblock scripts %}
